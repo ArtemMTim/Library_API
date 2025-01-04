@@ -23,6 +23,11 @@ https://github.com/ArtemMTim/
 ```
 pip install -r requirements.txt
 ```
+или с использованием Poetry:
+```
+poetry install
+```
+
 ## Использование:
 Раздел будет дополняться по мере разработки.
 
