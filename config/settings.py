@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_celery_beat",
     "users",
+    "library",
     "drf_yasg",
 ]
 

@@ -7,12 +7,15 @@ from .models import User
 class UserAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "email",
-        "tg_id",
         "first_name",
         "last_name",
+        "patronymic",
+        "birth_date",
+        "address",
         "phone_number",
+        "email",
+        "tg_id",
         "avatar",
     )
-    search_fields = ("email", "first_name", "last_name", "phone_number")
-    list_filter = ("email", "first_name", "last_name", "phone_number")
+    search_fields = ("email", "first_name", "last_name", "phone_number", "tg_id")
+    list_filter = ("email", "first_name", "last_name", "phone_number", "tg_id")
