@@ -152,7 +152,9 @@ CORS_ALLOW_ALL_ORIGINS = False
 # Настройки JWT-токенов
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
-    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTAuthentication",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
 }
 
@@ -182,6 +184,8 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULE = {
     "task-name": {
         "task": "tracker.tasks.habit_to_do_reminder",  # Путь к задаче
-        "schedule": timedelta(minutes=2),  # Расписание выполнения задачи (например, каждые 10 минут)
+        "schedule": timedelta(
+            minutes=2
+        ),  # Расписание выполнения задачи (например, каждые 10 минут)
     },
 }

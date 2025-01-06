@@ -1,7 +1,10 @@
 from django.db import models
+from users.models import User
+
 
 class Author(models.Model):
     """Модель автора."""
+
     last_name = models.CharField(
         max_length=50,
         verbose_name="Фамилия",
@@ -56,14 +59,91 @@ class Author(models.Model):
     def __str__(self):
         return f"{self.last_name} {self.first_name} {self.patronymic}"
 
+
 class Book(models.Model):
     """Модель книги."""
-    pass
+
+    title = models.CharField(
+        max_length=255, verbose_name="Название", help_text="Введите название книги."
+    )
+    description = models.TextField(
+        verbose_name="Описание книги",
+        help_text="Введите описание книги",
+        blank=True,
+        null=True,
+    )
+    image = models.ImageField(
+        upload_to="users/books_img",
+        verbose_name="Обложка",
+        blank=True,
+        null=True,
+        help_text="Загрузите обложку",
+    )
+    author = models.ForeignKey(
+        Author,
+        verbose_name="Автор",
+        on_delete=models.CASCADE,
+        help_text="Выберите автора",
+    )
+    genre = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="Жанр книги",
+        help_text="Введите жанр книги.",
+    )
+    publication_year = models.IntegerField(
+        verbose_name="Год публикации произведения",
+        help_text="Введите год публикации произведения",
+        blank=True,
+        null=True,
+    )
+    publishing = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name="Издательство",
+        help_text="Введите название издательства.",
+    )
+    book_year = models.IntegerField(
+        verbose_name="Год выпуска книги",
+        help_text="Введите год выпуска книги",
+        blank=True,
+        null=True,
+    )
+    isbn = models.CharField(
+        max_length=13,
+        verbose_name="ISBN",
+        help_text="Введите ISBN книги.",
+        blank=True,
+        null=True,
+    )
+    issue = models.BooleanField(
+        default=False,
+        verbose_name="Признак выдачи книги читателю",
+        help_text="Введите признак выдачи книги читателю.",
+    )
+    issue_date = models.DateField(
+        verbose_name="Дата выдачи книги читателю",
+        blank=True,
+        null=True,
+        help_text="Введите дату выдачи книги читателю",
+    )
+    reader = models.ForeignKey(
+        User,
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        verbose_name="Читатель",
+        help_text="Укажите читателя.",
+    )
+
     class Meta:
         verbose_name = "Книга"
         verbose_name_plural = "Книги"
 
     def __str__(self):
         return self.title
+
 
 # Create your models here.
