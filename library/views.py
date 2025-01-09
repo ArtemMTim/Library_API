@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from datetime import datetime, date
+from rest_framework.views import APIView
 from rest_framework.generics import (
     CreateAPIView,
     DestroyAPIView,
@@ -80,6 +82,26 @@ class BookCreateApiView(CreateAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+class IssueBookApiView(APIView):
+    """Контроллер выдачи книги."""
+    def post(self, *args, **kwargs):
+        user_id = self.request.data.get("user")
+        book_id = self.request.data.get("book")
+        if Book.objects.filter(reader=user_id, id=book_id, issue=True).exists():
+            book = get_object_or_404(Book, id=book_id)
+            book.reader = ""
+            book.issue_date = ""
+            book.issue = False
+            book.save()
+            return Response({"message": "Книга возвращена"})
+        else:
+            book = get_object_or_404(Book, id=book_id)
+            book.reader = user_id
+            book.issue_date = date.today()
+            book.issue = True
+            book.save()
+            return Response({"message": "Книга выдана"})
 
 
 # Create your views here.

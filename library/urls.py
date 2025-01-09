@@ -11,6 +11,7 @@ from library.views import (
     BookDestroyApiView,
     AuthorCreateApiView,
     BookCreateApiView,
+    IssueBookApiView,
 )
 
 
@@ -37,4 +38,5 @@ urlpatterns = [
     path("books/<int:pk>/update/", BookUpdateApiView.as_view(), name="books_update"),
     path("books/<int:pk>/delete/", BookDestroyApiView.as_view(), name="books_delete"),
     path("books/create/", BookCreateApiView.as_view(), name="books_create"),
+    path("book_issue/", IssueBookApiView.as_view(), name="book_issue"),
 ]
