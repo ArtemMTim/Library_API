@@ -7,6 +7,7 @@ from users.models import User
 
 class AuthorTestCase(APITestCase):
     """Тесты для модели авторов."""
+
     def setUp(self):
         self.user = User.objects.create(email="test@test.com")
         self.author = Author.objects.create(
@@ -32,7 +33,11 @@ class AuthorTestCase(APITestCase):
 
     def test_author_update(self):
         """Тест изменения автора."""
-        data = {"last_name": "New_test", "first_name": "New_test", "patronymic": "New_test"}
+        data = {
+            "last_name": "New_test",
+            "first_name": "New_test",
+            "patronymic": "New_test",
+        }
         url = reverse("library:authors_update", args=(self.author.id,))
         response = self.client.patch(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -46,14 +51,18 @@ class AuthorTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Author.objects.all().count(), 0)
 
+
 class BookTestCase(APITestCase):
     """Тесты для модели книг."""
+
     def setUp(self):
         self.user = User.objects.create(email="test@test.com")
         self.author = Author.objects.create(
             last_name="Test", first_name="Test", patronymic="Test"
         )
-        self.book = Book.objects.create(title="Test_Book", author=self.author, genre="Test", description="Test")
+        self.book = Book.objects.create(
+            title="Test_Book", author=self.author, genre="Test", description="Test"
+        )
         self.client.force_authenticate(user=self.user)
 
     def test_book_retrieve(self):
@@ -66,7 +75,12 @@ class BookTestCase(APITestCase):
 
     def test_book_create(self):
         """Тест создания книги."""
-        data = {"title": "Test_new", "genre": "Test_new", "description": "Test_new", "author": self.author.id}
+        data = {
+            "title": "Test_new",
+            "genre": "Test_new",
+            "description": "Test_new",
+            "author": self.author.id,
+        }
         url = reverse("library:books_create")
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -87,4 +101,3 @@ class BookTestCase(APITestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Book.objects.all().count(), 0)
-

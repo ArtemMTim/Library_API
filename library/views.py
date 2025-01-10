@@ -12,6 +12,8 @@ from rest_framework.generics import (
 
 from library.models import Author, Book
 from library.serializers import AuthorSerializer, BookSerializer
+from users.models import User
+from rest_framework.response import Response
 
 
 class AuthorListApiView(ListAPIView):
@@ -92,14 +94,15 @@ class IssueBookApiView(APIView):
         book_id = self.request.data.get("book")
         if Book.objects.filter(reader=user_id, id=book_id, issue=True).exists():
             book = get_object_or_404(Book, id=book_id)
-            book.reader = ""
-            book.issue_date = ""
+            book.reader = None
+            book.issue_date = None
             book.issue = False
             book.save()
             return Response({"message": "Книга возвращена"})
         else:
             book = get_object_or_404(Book, id=book_id)
-            book.reader = user_id
+            user = get_object_or_404(User, id=user_id)
+            book.reader = user
             book.issue_date = date.today()
             book.issue = True
             book.save()
