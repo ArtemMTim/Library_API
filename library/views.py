@@ -83,8 +83,10 @@ class BookCreateApiView(CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
+
 class IssueBookApiView(APIView):
     """Контроллер выдачи книги."""
+
     def post(self, *args, **kwargs):
         user_id = self.request.data.get("user")
         book_id = self.request.data.get("book")
