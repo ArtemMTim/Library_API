@@ -1,21 +1,13 @@
 from django.urls import path
 from rest_framework.permissions import AllowAny
-from library.views import (
-    AuthorListApiView,
-    BookListApiView,
-    AuthorRetrieveApiView,
-    BookRetrieveApiView,
-    AuthorUpdateApiView,
-    BookUpdateApiView,
-    AuthorDestroyApiView,
-    BookDestroyApiView,
-    AuthorCreateApiView,
-    BookCreateApiView,
-    IssueBookApiView,
-)
-
 
 from library.apps import LibraryConfig
+from library.views import (AuthorCreateApiView, AuthorDestroyApiView,
+                           AuthorListApiView, AuthorRetrieveApiView,
+                           AuthorUpdateApiView, BookCreateApiView,
+                           BookDestroyApiView, BookListApiView,
+                           BookRetrieveApiView, BookUpdateApiView,
+                           IssueBookApiView)
 
 # from users.views import UserCreateApiView, UserDeleteApiView, UserListApiView, UserRetrieveApiView, UserUpdateApiView
 

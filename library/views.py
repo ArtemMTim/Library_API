@@ -1,20 +1,16 @@
+from datetime import date, datetime
+
 from django.shortcuts import render
-from datetime import datetime, date
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView, get_object_or_404)
+from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import (
-    CreateAPIView,
-    DestroyAPIView,
-    ListAPIView,
-    RetrieveAPIView,
-    UpdateAPIView,
-    get_object_or_404,
-)
 
 from library.models import Author, Book
+from library.pagination import PageSize
 from library.serializers import AuthorSerializer, BookSerializer
 from users.models import User
-from rest_framework.response import Response
-from library.pagination import PageSize
 
 
 class AuthorListApiView(ListAPIView):

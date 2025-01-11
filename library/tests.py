@@ -1,7 +1,8 @@
-from rest_framework.test import APITestCase
-from library.models import Author, Book
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APITestCase
+
+from library.models import Author, Book
 from users.models import User
 
 
@@ -155,3 +156,41 @@ class BookTestCase(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), result)
+
+
+class BookIssuesTestCase(APITestCase):
+    """Тест выдачи и приёма книги."""
+
+    def setUp(self):
+        self.user = User.objects.create(email="test@test.com")
+        self.author = Author.objects.create(
+            last_name="Test", first_name="Test", patronymic="Test"
+        )
+        self.book = Book.objects.create(
+            title="Test_Book", author=self.author, genre="Test", description="Test"
+        )
+        self.book_issued = Book.objects.create(
+            title="Test_Book",
+            author=self.author,
+            genre="Test",
+            description="Test",
+            issue=True,
+            reader=self.user,
+        )
+        self.client.force_authenticate(user=self.user)
+
+    def test_book_issue(self):
+        """Тест выдачи книги."""
+        url = reverse("library:book_issue")
+        data = {"user": self.user.id, "book": self.book.id}
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json().get("message"), "Книга выдана")
+
+    def test_book_unissue(self):
+        """Тест приёма книги."""
+        url = reverse("library:book_issue")
+        data = {"user": self.user.id, "book": self.book_issued.id}
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json().get("message"), "Книга возвращена")
