@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from library.models import Author, Book
+from library.validators import AuthorValidator
 
 
 class AuthorSerializer(ModelSerializer):
@@ -13,6 +14,7 @@ class AuthorSerializer(ModelSerializer):
 
     class Meta:
         model = Author
+        validators = [AuthorValidator(field="__all__")]
         fields = (
             "id",
             "last_name",
