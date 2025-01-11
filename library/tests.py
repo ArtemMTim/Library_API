@@ -51,6 +51,30 @@ class AuthorTestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Author.objects.all().count(), 0)
 
+    def test_author_list(self):
+        """Тест вывода списка авторов."""
+        url = reverse("library:authors")
+        response = self.client.get(url)
+        result = {
+            "count": 1,
+            "next": None,
+            "previous": None,
+            "results": [
+                {
+                    "id": self.author.id,
+                    "last_name": self.author.last_name,
+                    "first_name": self.author.first_name,
+                    "patronymic": self.author.patronymic,
+                    "birth_date": None,
+                    "death_date": None,
+                    "authors_books": [],
+                }
+            ],
+        }
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), result)
+
 
 class BookTestCase(APITestCase):
     """Тесты для модели книг."""
@@ -101,3 +125,33 @@ class BookTestCase(APITestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Book.objects.all().count(), 0)
+
+    def test_book_list(self):
+        """Тест вывода списка книг."""
+        url = reverse("library:books")
+        response = self.client.get(url)
+        result = {
+            "count": 1,
+            "next": None,
+            "previous": None,
+            "results": [
+                {
+                    "id": self.book.id,
+                    "title": self.book.title,
+                    "description": self.book.description,
+                    "image": None,
+                    "genre": self.book.genre,
+                    "publication_year": None,
+                    "publishing": None,
+                    "book_year": None,
+                    "isbn": None,
+                    "issue": False,
+                    "issue_date": None,
+                    "author": self.author.id,
+                    "reader": None,
+                }
+            ],
+        }
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), result)

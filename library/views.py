@@ -14,6 +14,7 @@ from library.models import Author, Book
 from library.serializers import AuthorSerializer, BookSerializer
 from users.models import User
 from rest_framework.response import Response
+from library.pagination import PageSize
 
 
 class AuthorListApiView(ListAPIView):
@@ -21,6 +22,7 @@ class AuthorListApiView(ListAPIView):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    pagination_class = PageSize
 
 
 class AuthorRetrieveApiView(RetrieveAPIView):
@@ -56,6 +58,7 @@ class BookListApiView(ListAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    pagination_class = PageSize
 
 
 class BookRetrieveApiView(RetrieveAPIView):
