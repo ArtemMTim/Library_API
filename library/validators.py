@@ -10,37 +10,24 @@ class AuthorValidator:
         self.field = field
 
     def __call__(self, value):
+        last_name = value.get("last_name", None)
+        first_name = value.get("first_name", None)
+        patronymic = value.get("patronymic", None)
+        birth_date = value.get("birth_date", None)
+        death_date = value.get("death_date", None)
+        if Author.objects.filter(
+            last_name=last_name,
+            first_name=first_name,
+            patronymic=patronymic,
+        ).exists():
+            raise serializers.ValidationError(
+                "Такой автор уже существует в базе данных библиотеки."
+            )
 
-        if "last_name" in value and "first_name" in value and "patronymic" in value:
-            # случай с автором с полным ФИО
-            last_name = value["last_name"]
-            first_name = value["first_name"]
-            patronymic = value["patronymic"]
-            if Author.objects.filter(
-                last_name=last_name,
-                first_name=first_name,
-                patronymic=patronymic,
-            ).exists():
-                raise serializers.ValidationError(
-                    "Такой автор уже существует в базе данных библиотеки."
-                )
-        if "last_name" in value and "first_name" in value:
-            # случай с автором с неполным ФИО - только имя и фамилия
-            last_name = value["last_name"]
-            first_name = value["first_name"]
-            patronymic = None
-            if Author.objects.filter(
-                last_name=last_name,
-                first_name=first_name,
-                patronymic=patronymic,
-            ).exists():
-                raise serializers.ValidationError(
-                    "Такой автор уже существует в базе данных библиотеки."
-                )
-        if "birth_date" in value and "death_date" in value:
+        if birth_date and death_date:
             # случай с автором с датами рождения и смерти
-            birth_date = value["birth_date"]
-            death_date = value["death_date"]
+            # birth_date = value["birth_date"]
+            # death_date = value["death_date"]
             if birth_date >= death_date:
                 raise serializers.ValidationError(
                     "Дата рождения не может быть больше или равна дате смерти."

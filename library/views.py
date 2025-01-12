@@ -1,6 +1,8 @@
 from datetime import date, datetime
 
 from django.shortcuts import render
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView, get_object_or_404)
@@ -19,6 +21,9 @@ class AuthorListApiView(ListAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     pagination_class = PageSize
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
+    filterset_fields = ("last_name", "first_name", "patronymic")
+    ordering_fields = ("last_name", "first_name", "patronymic", "birth_date")
 
 
 class AuthorRetrieveApiView(RetrieveAPIView):
@@ -55,6 +60,20 @@ class BookListApiView(ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     pagination_class = PageSize
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
+    filterset_fields = (
+        "title",
+        "author",
+        "genre",
+        "publication_year",
+        "publishing",
+        "book_year",
+        "isbn",
+        "issue",
+        "issue_date",
+        "reader",
+    )
+    ordering_fields = ("title", "author", "genre", "isbn")
 
 
 class BookRetrieveApiView(RetrieveAPIView):

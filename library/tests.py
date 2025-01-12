@@ -26,11 +26,39 @@ class AuthorTestCase(APITestCase):
 
     def test_author_create(self):
         """Тест создания автора."""
-        data = {"last_name": "Test", "first_name": "Test", "patronymic": "Test"}
+        data = {"last_name": "Test_new", "first_name": "Test", "patronymic": "Test"}
         url = reverse("library:authors_create")
         response = self.client.post(url, data=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Author.objects.all().count(), 2)
+
+    def test_author_create_already_exist(self):
+        """Тест создания автора."""
+        data = {"last_name": "Test", "first_name": "Test", "patronymic": "Test"}
+        url = reverse("library:authors_create")
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json().get("non_field_errors"),
+            ["Такой автор уже существует в базе данных библиотеки."],
+        )
+
+    def test_author_create_wrong_date(self):
+        """Тест создания автора."""
+        data = {
+            "last_name": "Test_new",
+            "first_name": "Test_new",
+            "patronymic": "Test_new",
+            "birth_date": "2025-01-01",
+            "death_date": "2024-10-01",
+        }
+        url = reverse("library:authors_create")
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.json().get("non_field_errors"),
+            ["Дата рождения не может быть больше или равна дате смерти."],
+        )
 
     def test_author_update(self):
         """Тест изменения автора."""
