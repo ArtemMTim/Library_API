@@ -5,6 +5,7 @@ from rest_framework import filters
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView, get_object_or_404)
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,7 +13,6 @@ from library.models import Author, Book
 from library.pagination import PageSize
 from library.serializers import AuthorSerializer, BookSerializer
 from users.models import User
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 class AuthorListApiView(ListAPIView):
@@ -56,7 +56,7 @@ class AuthorCreateApiView(CreateAPIView):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = [IsAuthenticated,IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 class BookListApiView(ListAPIView):
@@ -111,7 +111,7 @@ class BookCreateApiView(CreateAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated,IsAdminUser]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 class IssueBookApiView(APIView):
