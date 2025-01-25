@@ -12,6 +12,7 @@ from library.models import Author, Book
 from library.pagination import PageSize
 from library.serializers import AuthorSerializer, BookSerializer
 from users.models import User
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 class AuthorListApiView(ListAPIView):
@@ -19,6 +20,7 @@ class AuthorListApiView(ListAPIView):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [IsAuthenticated]
     pagination_class = PageSize
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     filterset_fields = ("last_name", "first_name", "patronymic")
@@ -30,6 +32,7 @@ class AuthorRetrieveApiView(RetrieveAPIView):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class AuthorUpdateApiView(UpdateAPIView):
@@ -37,6 +40,7 @@ class AuthorUpdateApiView(UpdateAPIView):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 class AuthorDestroyApiView(DestroyAPIView):
@@ -44,6 +48,7 @@ class AuthorDestroyApiView(DestroyAPIView):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 class AuthorCreateApiView(CreateAPIView):
@@ -51,6 +56,7 @@ class AuthorCreateApiView(CreateAPIView):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    permission_classes = [IsAuthenticated,IsAdminUser]
 
 
 class BookListApiView(ListAPIView):
@@ -58,6 +64,7 @@ class BookListApiView(ListAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
     pagination_class = PageSize
     filter_backends = (DjangoFilterBackend, filters.OrderingFilter)
     filterset_fields = (
@@ -80,6 +87,7 @@ class BookRetrieveApiView(RetrieveAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class BookUpdateApiView(UpdateAPIView):
@@ -87,6 +95,7 @@ class BookUpdateApiView(UpdateAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 class BookDestroyApiView(DestroyAPIView):
@@ -94,6 +103,7 @@ class BookDestroyApiView(DestroyAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
 
 class BookCreateApiView(CreateAPIView):
@@ -101,10 +111,13 @@ class BookCreateApiView(CreateAPIView):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated,IsAdminUser]
 
 
 class IssueBookApiView(APIView):
     """Контроллер выдачи книги."""
+
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, *args, **kwargs):
         user_id = self.request.data.get("user")

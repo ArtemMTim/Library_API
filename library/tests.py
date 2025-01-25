@@ -10,7 +10,7 @@ class AuthorTestCase(APITestCase):
     """Тесты для модели авторов."""
 
     def setUp(self):
-        self.user = User.objects.create(email="test@test.com")
+        self.user = User.objects.create(email="test@test.com", is_staff=True)
         self.author = Author.objects.create(
             last_name="Test", first_name="Test", patronymic="Test"
         )
@@ -109,7 +109,7 @@ class BookTestCase(APITestCase):
     """Тесты для модели книг."""
 
     def setUp(self):
-        self.user = User.objects.create(email="test@test.com")
+        self.user = User.objects.create(email="test@test.com", is_staff=True)
         self.author = Author.objects.create(
             last_name="Test", first_name="Test", patronymic="Test"
         )
@@ -190,7 +190,7 @@ class BookIssuesTestCase(APITestCase):
     """Тест выдачи и приёма книги."""
 
     def setUp(self):
-        self.user = User.objects.create(email="test@test.com")
+        self.user = User.objects.create(email="test@test.com", is_staff=True)
         self.author = Author.objects.create(
             last_name="Test", first_name="Test", patronymic="Test"
         )

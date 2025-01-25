@@ -1,8 +1,8 @@
 from rest_framework import permissions
 
 
-class IsCreater(permissions.BasePermission):
-    """Проверка на создателя объекта."""
+class IsUser(permissions.BasePermission):
+    """Проверка на пользователя."""
 
     def has_object_permission(self, request, view, obj):
-        return obj.creater == request.user
+        return obj.email == request.user.email

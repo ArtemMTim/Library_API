@@ -15,6 +15,7 @@ class UserTestCase(APITestCase):
             phone_number="+71234567890",
             is_active=True,
             is_superuser=True,
+            is_staff=True,
         )
         self.client.force_authenticate(user=self.user)
 

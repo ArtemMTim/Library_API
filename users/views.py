@@ -1,10 +1,11 @@
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView)
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 
 from users.models import User
 from users.serializers import UserSerializer
+from users.permissions import IsUser
 
 
 class UserCreateApiView(CreateAPIView):
@@ -12,7 +13,7 @@ class UserCreateApiView(CreateAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = [AllowAny,]
 
     def perform_create(self, serializer):
         user = serializer.save(is_active=True)
@@ -25,6 +26,7 @@ class UserDeleteApiView(DestroyAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsUser]
 
 
 class UserUpdateApiView(UpdateAPIView):
@@ -32,6 +34,7 @@ class UserUpdateApiView(UpdateAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsUser]
 
 
 class UserRetrieveApiView(RetrieveAPIView):
@@ -39,6 +42,7 @@ class UserRetrieveApiView(RetrieveAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsUser]
 
 
 class UserListApiView(ListAPIView):
@@ -46,3 +50,4 @@ class UserListApiView(ListAPIView):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, IsAdminUser]
