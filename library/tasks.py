@@ -1,8 +1,8 @@
+import requests
 from celery import shared_task
 from django.conf import settings
 from django.core.mail import send_mail
-import requests
-
+from email.mime.text import MIMEText
 
 
 @shared_task
@@ -16,6 +16,8 @@ def email_notification(email, subject, message):
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=[email],
     )
+
+
 @shared_task()
 def telegram_notification(message, chat_id):
     """Отправка уведомлений о выдачи/сдачи книги через телеграм-бот.

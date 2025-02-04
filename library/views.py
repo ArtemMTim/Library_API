@@ -1,3 +1,4 @@
+import textwrap
 from datetime import date
 
 from django_filters.rest_framework import DjangoFilterBackend
@@ -12,8 +13,8 @@ from rest_framework.views import APIView
 from library.models import Author, Book
 from library.pagination import PageSize
 from library.serializers import AuthorSerializer, BookSerializer
-from users.models import User
 from library.tasks import email_notification, telegram_notification
+from users.models import User
 
 
 class AuthorListApiView(ListAPIView):
@@ -130,9 +131,17 @@ class IssueBookApiView(APIView):
             book.issue_date = None
             book.issue = False
             book.save()
-            # формируем сообщение и тему письма о возврате книги, отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
-            message = f'Здравствуйте!\nВы вернули книгу "{book.title}" автора {book.author.first_name} {book.author.last_name}. Спасибо!\nС Уважением, администрация библиотеки!'
-            email_notification.delay(email=user.email, subject='Возврат книги', message=message)
+            # формируем сообщение и тему письма о возврате книги,
+            # отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
+            message = textwrap.dedent(f'''\
+            Здравствуйте!
+            Вы вернули книгу "{book.title}" автора {book.author}. Спасибо!
+            С Уважением, администрация библиотеки!
+            ''')
+            subject = "Возврат книги"
+            email_notification.delay(
+                email=user.email, subject=subject, message=message
+            )
             if user.tg_id:
                 telegram_notification.delay(chat_id=user.tg_id, message=message)
 
@@ -144,9 +153,17 @@ class IssueBookApiView(APIView):
             book.issue_date = date.today()
             book.issue = True
             book.save()
-            # формируем сообщение и тему письма о выдаче книги, отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
-            message = f'Здравствуйте!\nВам выдали книгу "{book.title}" автора {book.author.first_name} {book.author.last_name} на 30 календарных дней. Приятного чтения!\nС Уважением, администрация библиотеки!'
-            email_notification.delay(email=user.email, subject='Выдача книги', message=message)
+            # формируем сообщение и тему письма о выдаче книги,
+            # отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
+            message = textwrap.dedent(f'''\
+            Здравствуйте!
+            Вам выдали книгу "{book.title}" автора {book.author} на 30 календарных дней. Приятного чтения!
+            С Уважением, администрация библиотеки!
+            ''')
+            subject = 'Выдача книги'
+            email_notification.delay(
+                email=user.email, subject=subject, message=message
+            )
             if user.tg_id:
                 telegram_notification.delay(chat_id=user.tg_id, message=message)
             return Response({"message": "Книга выдана"})

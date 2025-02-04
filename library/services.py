@@ -18,6 +18,6 @@ def send_telegram_message(message, chat_id):
 if __name__ == "__main__":
     text = "Test message"
     chat_id = 123456789
-    send_message(
+    send_telegram_message(
         text=text, chat_id=chat_id
     )  # пользователю 123456 ушло сообщение "Привет"
