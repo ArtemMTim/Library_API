@@ -13,6 +13,7 @@ from library.models import Author, Book
 from library.pagination import PageSize
 from library.serializers import AuthorSerializer, BookSerializer
 from users.models import User
+from library.tasks import email_notification, telegram_notification
 
 
 class AuthorListApiView(ListAPIView):
@@ -124,10 +125,17 @@ class IssueBookApiView(APIView):
         book_id = self.request.data.get("book")
         if Book.objects.filter(reader=user_id, id=book_id, issue=True).exists():
             book = get_object_or_404(Book, id=book_id)
+            user = get_object_or_404(User, id=user_id)
             book.reader = None
             book.issue_date = None
             book.issue = False
             book.save()
+            # формируем сообщение и тему письма о возврате книги, отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
+            message = f'Здравствуйте!\nВы вернули книгу "{book.title}" автора {book.author.first_name} {book.author.last_name}. Спасибо!\nС Уважением, администрация библиотеки!'
+            email_notification.delay(email=user.email, subject='Возврат книги', message=message)
+            if user.tg_id:
+                telegram_notification.delay(chat_id=user.tg_id, message=message)
+
             return Response({"message": "Книга возвращена"})
         else:
             book = get_object_or_404(Book, id=book_id)
@@ -136,6 +144,11 @@ class IssueBookApiView(APIView):
             book.issue_date = date.today()
             book.issue = True
             book.save()
+            # формируем сообщение и тему письма о выдаче книги, отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
+            message = f'Здравствуйте!\nВам выдали книгу "{book.title}" автора {book.author.first_name} {book.author.last_name} на 30 календарных дней. Приятного чтения!\nС Уважением, администрация библиотеки!'
+            email_notification.delay(email=user.email, subject='Выдача книги', message=message)
+            if user.tg_id:
+                telegram_notification.delay(chat_id=user.tg_id, message=message)
             return Response({"message": "Книга выдана"})
 
 
