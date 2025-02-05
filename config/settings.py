@@ -183,7 +183,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CELERY_BEAT_SCHEDULE = {
     "task-name": {
-        "task": "tracker.tasks.habit_to_do_reminder",  # Путь к задаче
+        "task": "library.tasks.send_reminder",  # Путь к задаче
         "schedule": timedelta(
             minutes=2
         ),  # Расписание выполнения задачи (например, каждые 10 минут)

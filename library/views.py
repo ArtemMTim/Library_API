@@ -133,15 +133,15 @@ class IssueBookApiView(APIView):
             book.save()
             # формируем сообщение и тему письма о возврате книги,
             # отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
-            message = textwrap.dedent(f'''\
+            message = textwrap.dedent(
+                f"""\
             Здравствуйте!
             Вы вернули книгу "{book.title}" автора {book.author}. Спасибо!
             С Уважением, администрация библиотеки!
-            ''')
-            subject = "Возврат книги"
-            email_notification.delay(
-                email=user.email, subject=subject, message=message
+            """
             )
+            subject = "Возврат книги"
+            email_notification.delay(email=user.email, subject=subject, message=message)
             if user.tg_id:
                 telegram_notification.delay(chat_id=user.tg_id, message=message)
 
@@ -155,15 +155,15 @@ class IssueBookApiView(APIView):
             book.save()
             # формируем сообщение и тему письма о выдаче книги,
             # отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
-            message = textwrap.dedent(f'''\
+            message = textwrap.dedent(
+                f"""\
             Здравствуйте!
             Вам выдали книгу "{book.title}" автора {book.author} на 30 календарных дней. Приятного чтения!
             С Уважением, администрация библиотеки!
-            ''')
-            subject = 'Выдача книги'
-            email_notification.delay(
-                email=user.email, subject=subject, message=message
+            """
             )
+            subject = "Выдача книги"
+            email_notification.delay(email=user.email, subject=subject, message=message)
             if user.tg_id:
                 telegram_notification.delay(chat_id=user.tg_id, message=message)
             return Response({"message": "Книга выдана"})

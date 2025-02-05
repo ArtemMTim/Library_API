@@ -1,4 +1,5 @@
 import requests
+from django.core.mail import send_mail
 
 from config import settings
 
@@ -15,9 +16,13 @@ def send_telegram_message(message, chat_id):
     )
 
 
-if __name__ == "__main__":
-    text = "Test message"
-    chat_id = 123456789
-    send_telegram_message(
-        text=text, chat_id=chat_id
-    )  # пользователю 123456 ушло сообщение "Привет"
+def send_email_message(email, subject, message):
+    """Отправка уведомлений по электронной почте.
+    Принимает адрес почты, тему и сообщение.
+    """
+    send_mail(
+        subject=subject,
+        message=message,
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[email],
+    )

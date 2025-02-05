@@ -1,8 +1,13 @@
+import textwrap
+from datetime import datetime, timedelta
+
 import requests
 from celery import shared_task
 from django.conf import settings
 from django.core.mail import send_mail
-from email.mime.text import MIMEText
+
+from library.models import Book
+from library.services import send_email_message, send_telegram_message
 
 
 @shared_task
@@ -29,3 +34,40 @@ def telegram_notification(message, chat_id):
     requests.get(
         f"{settings.TELEGRAM_URL}{settings.BOT_TOKEN}/sendMessage", params=params
     )
+
+
+@shared_task()
+def send_reminder():
+    """Отправляет уведомление о необходимости сдачи книги в срок.
+    Напоминает за 5 дней досрока и в день окончания срока."""
+    today = datetime.now().date()
+    books = Book.objects.filter(issue=True)
+    for book in books:
+        # напоминание об окончании срока чтения книги в текущий день
+        if book.issue_date + timedelta(days=30) == today:
+            email = book.reader.email
+            message = textwrap.dedent(
+                f"""\
+            Здравствуйте!
+            Напоминаем Вам, что сегодня истекает срок выдачи книги "{book.title}" автора {book.author}.
+            С Уважением, администрация библиотеки!
+            """
+            )
+            subject = "Необходимость сдачи книги"
+            send_email_message(email=email, subject=subject, message=message)
+            if book.reader.tg_id:
+                send_telegram_message(message=message, chat_id=book.reader.tg_id)
+        # напоминание об окончании срока чтения книги через 5 дней
+        if book.issue_date + timedelta(days=25) == today:
+            email = book.reader.email
+            message = textwrap.dedent(
+                f"""\
+            Здравствуйте!
+            Напоминаем Вам, через 5 дней истекает срок выдачи книги "{book.title}" автора {book.author}.
+            С Уважением, администрация библиотеки!
+            """
+            )
+            subject = "Необходимость сдачи книги"
+            send_email_message(email=email, subject=subject, message=message)
+            if book.reader.tg_id:
+                send_telegram_message(message=message, chat_id=book.reader.tg_id)
