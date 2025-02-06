@@ -25,7 +25,7 @@
 ## Установка:
 1. Клонируйте репозиторий:
 ```
-https://github.com/ArtemMTim/
+https://github.com/ArtemMTim/Final_project.git
 ```
 2. Установите зависимости:
 ```
