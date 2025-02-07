@@ -184,9 +184,7 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_BEAT_SCHEDULE = {
     "task-name": {
         "task": "library.tasks.send_reminder",  # Путь к задаче
-        "schedule": timedelta(
-            minutes=60*24
-        ),
+        "schedule": timedelta(minutes=60 * 24),
     },
 }
 LOG_PATH = os.path.join(BASE_DIR, "logs")

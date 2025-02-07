@@ -61,5 +61,20 @@ class UserTestCase(APITestCase):
         """Тестирование получения списка всех пользователей."""
         url = reverse("users:user_list")
         response = self.client.get(url)
+
+        result = [
+            {
+                "id": self.user.id,
+                "email": self.user.email,
+                "first_name": self.user.first_name,
+                "last_name": self.user.last_name,
+                "patronymic": self.user.patronymic,
+                "phone_number": self.user.phone_number,
+                "address": self.user.address,
+                "birth_date": self.user.birth_date,
+                "tg_id": self.user.tg_id,
+                "reading_books": [],
+            }
+        ]
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(response.json(), result)
