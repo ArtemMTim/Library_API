@@ -44,7 +44,7 @@ def send_reminder():
     books = Book.objects.filter(issue=True)
     for book in books:
         # напоминание об окончании срока чтения книги в текущий день
-        if book.issue_date + timedelta(days=30) == today:
+        if book.return_date == today:
             email = book.reader.email
             message = textwrap.dedent(
                 f"""\
@@ -58,7 +58,7 @@ def send_reminder():
             if book.reader.tg_id:
                 send_telegram_message(message=message, chat_id=book.reader.tg_id)
         # напоминание об окончании срока чтения книги через 5 дней
-        if book.issue_date + timedelta(days=25) == today:
+        if today + timedelta(days=5) == book.return_date:
             email = book.reader.email
             message = textwrap.dedent(
                 f"""\

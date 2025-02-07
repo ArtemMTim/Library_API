@@ -1,5 +1,5 @@
 import textwrap
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
@@ -129,6 +129,7 @@ class IssueBookApiView(APIView):
             user = get_object_or_404(User, id=user_id)
             book.reader = None
             book.issue_date = None
+            book.return_date = None
             book.issue = False
             book.save()
             # формируем сообщение и тему письма о возврате книги,
@@ -151,6 +152,7 @@ class IssueBookApiView(APIView):
             user = get_object_or_404(User, id=user_id)
             book.reader = user
             book.issue_date = date.today()
+            book.return_date = book.issue_date + timedelta(days=30)
             book.issue = True
             book.save()
             # формируем сообщение и тему письма о выдаче книги,
@@ -158,7 +160,8 @@ class IssueBookApiView(APIView):
             message = textwrap.dedent(
                 f"""\
             Здравствуйте!
-            Вам выдали книгу "{book.title}" автора {book.author} на 30 календарных дней. Приятного чтения!
+            Вам выдали книгу "{book.title}" автора {book.author} на 30 календарных дней до {book.return_date}.
+            Приятного чтения!
             С Уважением, администрация библиотеки!
             """
             )

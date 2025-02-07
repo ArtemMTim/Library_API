@@ -130,6 +130,12 @@ class Book(models.Model):
         null=True,
         help_text="Введите дату выдачи книги читателю",
     )
+    return_date = models.DateField(
+        verbose_name="Дата возврата книги читателем",
+        blank=True,
+        null=True,
+        help_text="Введите дату возврата книги читателем",
+    )
     reader = models.ForeignKey(
         User,
         blank=True,

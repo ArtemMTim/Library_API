@@ -10,7 +10,7 @@ class UserSerializer(ModelSerializer):
     reading_books = SerializerMethodField()
 
     def get_reading_books(self, user):
-        return [f"'{book.title}' {book.author}" for book in user.book_set.all()]
+        return [f"'{book.title}' {book.author} до {book.return_date}" for book in user.book_set.all()]
 
     class Meta:
         model = User

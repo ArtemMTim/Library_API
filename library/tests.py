@@ -176,6 +176,7 @@ class BookTestCase(APITestCase):
                     "isbn": None,
                     "issue": False,
                     "issue_date": None,
+                    "return_date": None,
                     "author": self.author.id,
                     "reader": None,
                 }
