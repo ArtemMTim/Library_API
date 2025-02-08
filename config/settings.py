@@ -1,5 +1,5 @@
 import os
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -192,14 +192,27 @@ LOG_PATH = os.path.join(BASE_DIR, "logs")
 if not os.path.exists(LOG_PATH):
     os.mkdir(LOG_PATH)
 
+LOG_NAME = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_debug.log"
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
     "handlers": {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": os.path.join(LOG_PATH, "debug.log"),
+            "filename": os.path.join(LOG_PATH, LOG_NAME),
+            "formatter": "verbose",
         },
     },
     "loggers": {
