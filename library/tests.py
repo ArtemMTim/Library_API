@@ -188,7 +188,7 @@ class BookTestCase(APITestCase):
 
 
 class BookIssuesTestCase(APITestCase):
-    """Тест выдачи и приёма книги."""
+    """Тесты выдачи и приёма книги."""
 
     def setUp(self):
         self.user = User.objects.create(email="test@test.com", is_staff=True)

@@ -1,5 +1,5 @@
 import textwrap
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
@@ -170,6 +170,3 @@ class IssueBookApiView(APIView):
             if user.tg_id:
                 telegram_notification.delay(chat_id=user.tg_id, message=message)
             return Response({"message": "Книга выдана"})
-
-
-# Create your views here.
