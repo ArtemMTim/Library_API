@@ -114,8 +114,9 @@ class BookTestCase(APITestCase):
             last_name="Test", first_name="Test", patronymic="Test"
         )
         self.book = Book.objects.create(
-            title="Test_Book", author=self.author, genre="Test", description="Test"
+            title="Test_Book", genre="Test", description="Test"
         )
+        self.book.author.add(self.author)
         self.client.force_authenticate(user=self.user)
 
     def test_book_retrieve(self):
@@ -177,12 +178,11 @@ class BookTestCase(APITestCase):
                     "issue": False,
                     "issue_date": None,
                     "return_date": None,
-                    "author": self.author.id,
+                    "author": [self.author.id],
                     "reader": None,
                 }
             ],
         }
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), result)
 
@@ -196,16 +196,17 @@ class BookIssuesTestCase(APITestCase):
             last_name="Test", first_name="Test", patronymic="Test"
         )
         self.book = Book.objects.create(
-            title="Test_Book", author=self.author, genre="Test", description="Test"
+            title="Test_Book", genre="Test", description="Test"
         )
+        self.book.author.add(self.author)
         self.book_issued = Book.objects.create(
             title="Test_Book",
-            author=self.author,
             genre="Test",
             description="Test",
             issue=True,
             reader=self.user,
         )
+        self.book_issued.author.add(self.author)
         self.client.force_authenticate(user=self.user)
 
     def test_book_issue(self):

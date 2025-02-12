@@ -38,7 +38,6 @@ class BookAdmin(admin.ModelAdmin):
         "title",
         "description",
         "image",
-        "author",
         "genre",
         "publication_year",
         "publishing",

@@ -47,7 +47,7 @@ class Author(models.Model):
         help_text="Загрузите изображение автора",
     )
     biography = models.TextField(
-        verbose_name="Краткая бтография",
+        verbose_name="Краткая биография",
         blank=True,
         null=True,
         help_text="Введите краткую биографию автора",
@@ -80,11 +80,10 @@ class Book(models.Model):
         null=True,
         help_text="Загрузите обложку",
     )
-    author = models.ForeignKey(
+    author = models.ManyToManyField(
         Author,
-        verbose_name="Автор",
-        on_delete=models.CASCADE,
-        help_text="Выберите автора",
+        verbose_name="Автор/авторы",
+        help_text="Выберите автора/авторов",
     )
     genre = models.CharField(
         max_length=255,

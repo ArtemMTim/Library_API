@@ -6,7 +6,6 @@
         "title": "Сияние",
         "description": "",
         "image": "",
-        "author": 3,
         "genre": null,
         "publication_year": 1977,
         "publishing": null,
@@ -15,7 +14,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            3
+        ]
     }
 },
 {
@@ -25,7 +27,6 @@
         "title": "Кладбище домашних животных",
         "description": "",
         "image": "",
-        "author": 3,
         "genre": null,
         "publication_year": 1983,
         "publishing": null,
@@ -34,7 +35,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            3
+        ]
     }
 },
 {
@@ -44,7 +48,6 @@
         "title": "Зелёная миля",
         "description": "",
         "image": "",
-        "author": 3,
         "genre": null,
         "publication_year": 1996,
         "publishing": null,
@@ -53,7 +56,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            3
+        ]
     }
 },
 {
@@ -63,7 +69,6 @@
         "title": "Мёртвые души",
         "description": "",
         "image": "",
-        "author": 2,
         "genre": null,
         "publication_year": 1842,
         "publishing": null,
@@ -72,7 +77,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            2
+        ]
     }
 },
 {
@@ -82,7 +90,6 @@
         "title": "Вечера на хуторе близ Диканьки",
         "description": "",
         "image": "",
-        "author": 2,
         "genre": null,
         "publication_year": 1831,
         "publishing": null,
@@ -91,7 +98,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            2
+        ]
     }
 },
 {
@@ -101,7 +111,6 @@
         "title": "Миргород",
         "description": "",
         "image": "",
-        "author": 2,
         "genre": null,
         "publication_year": 1835,
         "publishing": null,
@@ -110,7 +119,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            2
+        ]
     }
 },
 {
@@ -120,7 +132,6 @@
         "title": "Война и мир",
         "description": "",
         "image": "",
-        "author": 1,
         "genre": "Роман",
         "publication_year": 1873,
         "publishing": null,
@@ -129,7 +140,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            1
+        ]
     }
 },
 {
@@ -139,7 +153,6 @@
         "title": "Анна Каренина",
         "description": "",
         "image": "",
-        "author": 1,
         "genre": "Роман",
         "publication_year": 1875,
         "publishing": null,
@@ -148,7 +161,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            1
+        ]
     }
 },
 {
@@ -158,7 +174,6 @@
         "title": "Воскресение",
         "description": "",
         "image": "",
-        "author": 1,
         "genre": "Роман",
         "publication_year": 1899,
         "publishing": null,
@@ -167,7 +182,10 @@
         "issue": false,
         "issue_date": null,
         "return_date": null,
-        "reader": null
+        "reader": null,
+        "author": [
+            1
+        ]
     }
 }
 ]
