@@ -132,16 +132,18 @@ class IssueBookApiView(APIView):
             book.return_date = None
             book.issue = False
             book.save()
+            authors = ", ".join([str(author) for author in book.author.all()])
+            book_title = book.title
             # формируем сообщение и тему письма о возврате книги,
             # отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
             message = textwrap.dedent(
                 f"""\
             Здравствуйте!
-            Вы вернули книгу "{book.title}" автора {book.author}. Спасибо!
+            Вы вернули книгу "{book_title}" автора {authors}. Спасибо!
             С Уважением, администрация библиотеки!
             """
             )
-            subject = "Возврат книги"
+            subject = "Library notification"
             email_notification.delay(email=user.email, subject=subject, message=message)
             if user.tg_id:
                 telegram_notification.delay(chat_id=user.tg_id, message=message)
@@ -155,17 +157,20 @@ class IssueBookApiView(APIView):
             book.return_date = book.issue_date + timedelta(days=30)
             book.issue = True
             book.save()
+            authors = ", ".join([str(author) for author in book.author.all()])
+            book_title = book.title
+            return_date = book.return_date
             # формируем сообщение и тему письма о выдаче книги,
             # отправляем отложенной функцией через почту либо телеграм (при наличии у читателя)
             message = textwrap.dedent(
                 f"""\
             Здравствуйте!
-            Вам выдали книгу "{book.title}" автора {book.author} на 30 календарных дней до {book.return_date}.
+            Вам выдали книгу "{book_title}" автора {authors} на 30 календарных дней до {return_date}.
             Приятного чтения!
             С Уважением, администрация библиотеки!
             """
             )
-            subject = "Выдача книги"
+            subject = "Library notification"
             email_notification.delay(email=user.email, subject=subject, message=message)
             if user.tg_id:
                 telegram_notification.delay(chat_id=user.tg_id, message=message)

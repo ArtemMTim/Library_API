@@ -46,10 +46,12 @@ def send_reminder():
         # напоминание об окончании срока чтения книги в текущий день
         if book.return_date == today:
             email = book.reader.email
+            title = book.title
+            authors = ", ".join([str(author) for author in book.author.all()])
             message = textwrap.dedent(
                 f"""\
             Здравствуйте!
-            Напоминаем Вам, что сегодня истекает срок выдачи книги "{book.title}" автора {book.author}.
+            Напоминаем Вам, что сегодня истекает срок выдачи книги "{title}" автора {authors}.
             С Уважением, администрация библиотеки!
             """
             )
@@ -60,10 +62,12 @@ def send_reminder():
         # напоминание об окончании срока чтения книги через 5 дней
         if today + timedelta(days=5) == book.return_date:
             email = book.reader.email
+            title = book.title
+            authors = ", ".join([str(author) for author in book.author.all()])
             message = textwrap.dedent(
                 f"""\
             Здравствуйте!
-            Напоминаем Вам, через 5 дней истекает срок выдачи книги "{book.title}" автора {book.author}.
+            Напоминаем Вам, через 5 дней истекает срок выдачи книги "{title}" автора {authors}.
             С Уважением, администрация библиотеки!
             """
             )

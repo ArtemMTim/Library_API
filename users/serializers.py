@@ -11,7 +11,7 @@ class UserSerializer(ModelSerializer):
 
     def get_reading_books(self, user):
         return [
-            f"'{book.title}' {book.author} до {book.return_date}"
+            f"'{book.title}' {", ".join([str(author) for author in book.author.all()])} до {book.return_date}"
             for book in user.book_set.all()
         ]
 
