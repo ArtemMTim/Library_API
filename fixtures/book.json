@@ -1,0 +1,191 @@
+[
+{
+    "model": "library.book",
+    "pk": 1,
+    "fields": {
+        "title": "Сияние",
+        "description": "",
+        "image": "",
+        "genre": null,
+        "publication_year": 1977,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            3
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 2,
+    "fields": {
+        "title": "Кладбище домашних животных",
+        "description": "",
+        "image": "",
+        "genre": null,
+        "publication_year": 1983,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            3
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 3,
+    "fields": {
+        "title": "Зелёная миля",
+        "description": "",
+        "image": "",
+        "genre": null,
+        "publication_year": 1996,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            3
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 4,
+    "fields": {
+        "title": "Мёртвые души",
+        "description": "",
+        "image": "",
+        "genre": null,
+        "publication_year": 1842,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            2
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 5,
+    "fields": {
+        "title": "Вечера на хуторе близ Диканьки",
+        "description": "",
+        "image": "",
+        "genre": null,
+        "publication_year": 1831,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            2
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 6,
+    "fields": {
+        "title": "Миргород",
+        "description": "",
+        "image": "",
+        "genre": null,
+        "publication_year": 1835,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            2
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 7,
+    "fields": {
+        "title": "Война и мир",
+        "description": "",
+        "image": "",
+        "genre": "Роман",
+        "publication_year": 1873,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            1
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 8,
+    "fields": {
+        "title": "Анна Каренина",
+        "description": "",
+        "image": "",
+        "genre": "Роман",
+        "publication_year": 1875,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            1
+        ]
+    }
+},
+{
+    "model": "library.book",
+    "pk": 9,
+    "fields": {
+        "title": "Воскресение",
+        "description": "",
+        "image": "",
+        "genre": "Роман",
+        "publication_year": 1899,
+        "publishing": null,
+        "book_year": null,
+        "isbn": null,
+        "issue": false,
+        "issue_date": null,
+        "return_date": null,
+        "reader": null,
+        "author": [
+            1
+        ]
+    }
+}
+]
