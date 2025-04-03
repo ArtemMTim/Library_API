@@ -49,7 +49,7 @@
 Для запуска без использования контейнеризации:
 1. Клонируйте репозиторий:
 ```
-https://github.com/ArtemMTim/Final_project.git
+https://github.com/ArtemMTim/Library_API
 ```
 2. Установите зависимости:
 ```
